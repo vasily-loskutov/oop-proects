@@ -53,6 +53,7 @@ window.addEventListener('click',function(event){
                 }
             }
         }
+    
         const cardParametr = {
             src: getSrc(cart),
             price: card.querySelector('.price').textContent.replace(/[a-zа-яё]/gi, '').trim(),
@@ -61,7 +62,7 @@ window.addEventListener('click',function(event){
         };
         //проверка сущестует ли корзина
        if(cartAll != null){
-            //если корзина существует
+            //товар в корзине существует
             let itemInCart = cartAll.querySelector(`[data-articul="${cardParametr.articul}"]`)
             if(itemInCart){
                 return
@@ -69,9 +70,6 @@ window.addEventListener('click',function(event){
                 cards.renderCartElement(cardParametr)
             }
             
-                
-           
-            //проверяем есть ли уже такой товар в корзине
 
             
        }else{
@@ -113,8 +111,11 @@ window.addEventListener('click',function(event){
         }
        
         cards.minus(cartElement,startPrice(cart))
-
-         
+       }
+      //отслеживаем клик по кнопке удалить элемент
+      if(event.target.classList.contains('del-btn')){
+        let cartElement = event.target.closest('.cart-elem');
+        cards.delElement(cartElement)
        }
 
 })

@@ -120,3 +120,9 @@ img {
     border: 2px solid #4caf50;
     border-top: 0;
 }
+.del-btn {
+    width: 100px;
+    height: 100px;
+    margin-left: 100px;
+    background: url('../images/trash-box.svg');
+}
