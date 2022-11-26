@@ -6,7 +6,7 @@ class Cart{
         this.currency = 'РУБ'
         this.totalPrice = 0;
     }
-    delElement(cartElement){
+    static delElement(cartElement){
         let cart = document.querySelector('.cart')
         let cartTotal = document.querySelector('.cart-total')
         cartElement.remove()
@@ -18,29 +18,26 @@ class Cart{
 
     }
      plus(cartElement,startPrice){
+       let counter = cartElement.querySelector('.counter')
        let cartTotalText = document.querySelector('.cart-total-text')
        let cartPrice = cartElement.querySelector('.cart-elem-price-product')
        let newPrice = Number(cartPrice.textContent.replace(/[a-zа-яё]/gi, '').trim()) + startPrice;
        cartPrice.innerHTML =`${newPrice} ${this.currency}`
+       counter.textContent++
        this.totalPrice += startPrice
        cartTotalText.textContent = `Общая цена : ${this.totalPrice} ${this.currency}`
      
      }
      minus(cartElement,startPrice){
+        let counter = cartElement.querySelector('.counter')
         let cartTotalText = document.querySelector('.cart-total-text')
-        let cart = document.querySelector('.cart')
-        let cartTotal = document.querySelector('.cart-total')
         let cartPrice = cartElement.querySelector('.cart-elem-price-product')
        
         let newPrice = Number(cartPrice.textContent.replace(/[a-zа-яё]/gi, '').trim()) - startPrice;
         if(newPrice <= 0){
-            cartElement.remove()
-            if(Array.from(cart.children).length == 0){
-                cart.remove()
-                cartTotal.remove()
-                this.totalPrice = 0
-            }
+            Cart.delElement(cartElement)
         }
+        counter.textContent -= 1
         this.totalPrice -= startPrice
         cartTotalText.textContent = `Общая цена : ${this.totalPrice} ${this.currency}`
         cartPrice.innerHTML =`${newPrice} ${this.currency}`
@@ -79,11 +76,15 @@ class Cart{
         this.totalPrice += Number(cardParametr.price)
         let DelBtn = document.createElement('button');
         DelBtn.classList.add('del-btn');
+        let counter = document.createElement('h1');
+        counter.classList.add("counter");
+        counter.textContent = '1'
         cartElemPriceProduct.textContent =`${cardParametr.price} ${this.currency}`
         cartElementProduct.append(btnMinus);
         
         cartElementProduct.append(cartImg);
         cartElementProduct.append(btnPlus);
+        cartElementProduct.append(counter);
         cartElementProduct.append(DelBtn)
         cartElement.append(cartElementProduct);
         cartElement.append(cartElemPrice);
@@ -122,10 +123,13 @@ class Cart{
         let DelBtn = document.createElement('button');
         DelBtn.classList.add('del-btn');
         this.totalPrice += Number(cardParametr.price)
-        console.log( this.totalPrice)
         cartTotalText.textContent = `Общая цена : ${this.totalPrice} ${this.currency}`
+        let counter = document.createElement('h1');
+        counter.textContent = '1'
+        counter.classList.add("counter");
         cartElementProduct.append(cartImg);
         cartElementProduct.append(btnPlus);
+        cartElementProduct.append(counter);
         cartElement.append(cartElementProduct);
         cartElementProduct.append(DelBtn)
         cartElement.append(cartElemPrice);

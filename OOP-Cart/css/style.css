@@ -126,3 +126,7 @@ img {
     margin-left: 100px;
     background: url('../images/trash-box.svg');
 }
+.counter{
+    font-size: 70px;
+    margin-left: 100px;
+}
