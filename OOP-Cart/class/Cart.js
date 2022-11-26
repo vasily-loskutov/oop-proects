@@ -6,18 +6,25 @@ class Cart{
         this.currency = 'РУБ'
         this.totalPrice = 0;
     }
-    static delElement(cartElement){
+     delElement(cartElement){
         let cart = document.querySelector('.cart')
         let cartTotal = document.querySelector('.cart-total')
+        let cartTotalText = document.querySelector('.cart-total-text')
+    
+        let cartElementPrice = cartElement.querySelector('.cart-elem-price-product').textContent.replace(/\D/g, '').trim();
+        this.totalPrice -= Number(cartElementPrice)
+        cartTotalText.innerHTML =  `Общая цена : ${this.totalPrice} ${this.currency}`
         cartElement.remove()
         if(Array.from(cart.children).length == 0){
             cart.remove()
             cartTotal.remove()
+            this.totalPrice = 0
             
         }
 
     }
      plus(cartElement,startPrice){
+        
        let counter = cartElement.querySelector('.counter')
        let cartTotalText = document.querySelector('.cart-total-text')
        let cartPrice = cartElement.querySelector('.cart-elem-price-product')
@@ -25,6 +32,7 @@ class Cart{
        cartPrice.innerHTML =`${newPrice} ${this.currency}`
        counter.textContent++
        this.totalPrice += startPrice
+       
        cartTotalText.textContent = `Общая цена : ${this.totalPrice} ${this.currency}`
      
      }
@@ -35,7 +43,8 @@ class Cart{
        
         let newPrice = Number(cartPrice.textContent.replace(/[a-zа-яё]/gi, '').trim()) - startPrice;
         if(newPrice <= 0){
-            Cart.delElement(cartElement)
+            cartElement.remove()
+         
         }
         counter.textContent -= 1
         this.totalPrice -= startPrice

@@ -115,7 +115,7 @@ window.addEventListener('click',function(event){
       //отслеживаем клик по кнопке удалить элемент
       if(event.target.classList.contains('del-btn')){
         let cartElement = event.target.closest('.cart-elem');
-        Cart.delElement(cartElement)
+        cards.delElement(cartElement)
        }
 
 })
